@@ -574,6 +574,10 @@ endef
 ###########################################################
 ## Convert "a b c" into "a:b:c"
 ###########################################################
+
+empty :=
+space := $(empty) $(empty)
+
 define normalize-path-list
 $(subst $(space),:,$(strip $(1)))
 endef
@@ -1549,7 +1553,7 @@ endef
 #      only core.jar and framework.jar need a heap this big.
 # Avoid the memory arguments on Windows, dx fails to load for some reason with them.
 define transform-classes.jar-to-dex
-@echo -e ${CL_PFX}"target Dex:"${CL_RST}" $(PRIVATE_MODULE)"
+@echo "target Dex: $(PRIVATE_MODULE)"
 @mkdir -p $(dir $@)
 $(hide) $(DX) \
     $(if $(findstring windows,$(HOST_OS)),,-JXms16M -JXmx2048M) \
